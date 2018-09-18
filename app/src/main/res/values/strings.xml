@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">UserList</string>
+    <string name="fistName">First Name:</string>
+    <string name="lastName">Last Name:</string>
+    <string name="lb_clr">CLEAR</string>
+    <string name="lb_add">ADD</string>
+</resources>
