@@ -1,7 +1,6 @@
 package com.example.vanessajalakas.userlist;
 
 import android.app.AlertDialog;
-import android.app.Dialog;
 import android.content.DialogInterface;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -20,11 +19,9 @@ import java.util.List;
 public class MainActivity extends AppCompatActivity {
 
     private EditText first_name_text, last_name_text;
-    private Button add;
-    private ListView listView;
     private ArrayAdapter<Name> adapter;
     private List<Name> list = new ArrayList<>(Collections.singleton(new Name("Kalle", "Malle")));
-    private AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(this);
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,8 +29,8 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         first_name_text = findViewById(R.id.first_name);
         last_name_text = findViewById(R.id.last_name);
-        add = findViewById(R.id.btn_add);
-        listView = findViewById(R.id.listView1);
+        Button add = findViewById(R.id.btn_add);
+        ListView listView = findViewById(R.id.listView1);
 
         adapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, list);
         listView.setAdapter(adapter);
@@ -45,17 +42,20 @@ public class MainActivity extends AppCompatActivity {
                 String last = last_name_text.getText().toString().trim();
                 list.add(new Name(first, last));
 
+                onClear(v);
+
                 adapter.notifyDataSetChanged();
             }
         });
 
-        listView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
-            AlertDialog alert = dialogBuilder.create();
-
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
-            public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+
+                AlertDialog.Builder adb = new AlertDialog.Builder(MainActivity.this);
+                adb.setTitle(R.string.dialogTitle);
                 final int index = position;
-                dialogBuilder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                adb.setPositiveButton(R.string.dialogPos, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         list.remove(index);
@@ -63,14 +63,14 @@ public class MainActivity extends AppCompatActivity {
                     }
                 });
 
-                dialogBuilder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                adb.setNegativeButton(R.string.dialogNeg, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        alert.cancel();
+                        dialog.cancel();
                     }
                 });
 
-                return false;
+                adb.show();
             }
         });
     }

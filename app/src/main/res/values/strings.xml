@@ -4,4 +4,7 @@
     <string name="lastName">Last Name:</string>
     <string name="lb_clr">CLEAR</string>
     <string name="lb_add">ADD</string>
+    <string name="dialogTitle">Delete from the list</string>
+    <string name="dialogPos">Yes</string>
+    <string name="dialogNeg">Cancel</string>
 </resources>
